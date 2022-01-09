@@ -1,10 +1,10 @@
 CREATE DATABASE pct;
 USE pct;
 CREATE TABLE persona(
-	id_persona INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	nombre VARCHAR(60) NOT NULL ,
+    id_persona INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(60) NOT NULL ,
     apellido VARCHAR(60) NOT NULL,
-    dni CHAR(9) NOT NULL,
+    dni CHAR(9) NOT NULL UNIQUE,
     telefono CHAR(9) NOT NULL,
     direccion VARCHAR(45),
     correo VARCHAR(45),
@@ -62,7 +62,8 @@ CREATE TABLE detalle_investigacion(
     id_asesor INTEGER NOT NULL,
     id_investigacion INTEGER NOT NULL,
     estado VARCHAR(45),
-	avance INT,
+    comentario TEXT,
+    avance INT,
     CONSTRAINT fk_detalle_asesor FOREIGN KEY(id_asesor) REFERENCES asesor(id_asesor),
     CONSTRAINT fk_detalle_investigacion FOREIGN KEY(id_investigacion) REFERENCES investigacion(id_investigacion)
 );
@@ -95,10 +96,17 @@ CREATE TABLE historial(
 )
 
 
-INSERT INTO persona VALUES(null,'Julia Maria','Vazquez Agapito','40087741','939875148','Calle Los Angeles #221','juliavazquez@outlook.com','');
+delimiter $
+CREATE TRIGGER AGREGAR_AVANCE_AU
+AFTER UPDATE ON detalle_investigacion
+FOR EACH ROW 
+BEGIN
+INSERT INTO historial values(null,new.id_investigacion,new.comentario,now(),new.avance);
+END;
+$
 
-INSERT INTO tipo_cuenta VALUES(1000,'administrador');
+
+
 INSERT INTO tipo_cuenta VALUES(2000,'asesor');
 INSERT INTO tipo_cuenta VALUES(3000,'investigador')
 
-INSERT INTO usuario VALUES (null,1,1000,'40087741','admin123')
