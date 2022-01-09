@@ -59,6 +59,7 @@ export const postInvestigation = async (req: Request, res: Response) => {
       id_investigacion: investigacion.insertId,
       id_asesor,
       estado: "Por revisar",
+      comentario:"",
       avance: "0",
     };
     const detalleInvestigation = await pool.query(
@@ -263,7 +264,7 @@ export const putInvestigations = async (req: Request, res: Response) => {
 };
 
 export const putDetalleInvestigacion = async (req: Request, res: Response) => {
-  let { id_investigacion, estado, avance } = req.body;
+  let { id_investigacion, estado, avance,comentario } = req.body;
   // console.log("id_investigacion", id_investigacion);
   try {
     if (avance > 100) {
@@ -280,8 +281,8 @@ export const putDetalleInvestigacion = async (req: Request, res: Response) => {
 
       if (detalleInvestigation.length > 0) {
         const investigacion = await pool.query(
-          `UPDATE detalle_investigacion SET estado = '${estado}', avance = '${avance}' WHERE id_investigacion = ${id_investigacion}`
-        );
+          `UPDATE detalle_investigacion SET estado = '${estado}', avance = '${avance}', comentario = '${comentario}'  WHERE id_investigacion = ${id_investigacion}`
+        ); 
 
         return res.json({
           msg: "detalles de investigación actualizado",
