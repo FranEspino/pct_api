@@ -84,6 +84,17 @@ CREATE TABLE usuario(
     CONSTRAINT fk_usuario_persona FOREIGN KEY(id_persona) REFERENCES persona(id_persona)
 );
 
+
+CREATE TABLE historial(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_investigacion INTEGER NOT NULL,
+    comentario TEXT,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,   
+    avance INT,
+    CONSTRAINT fk_historial_investigacion FOREIGN KEY(id_investigacion) REFERENCES investigacion(id_investigacion)
+)
+
+
 INSERT INTO persona VALUES(null,'Julia Maria','Vazquez Agapito','40087741','939875148','Calle Los Angeles #221','juliavazquez@outlook.com','');
 
 INSERT INTO tipo_cuenta VALUES(1000,'administrador');
