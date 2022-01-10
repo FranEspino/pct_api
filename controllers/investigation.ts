@@ -263,6 +263,21 @@ export const putInvestigations = async (req: Request, res: Response) => {
   }
 };
 
+export const getDetalleHistorial=async(req:Request,res:Response)=>{
+console.log(req.params);
+const {id_investigacion}=req.params;
+console.log("id_investigacion",id_investigacion);
+try{
+  const detalleHistorial=await pool.query(
+    `SELECT * FROM historial WHERE id_investigacion=${id_investigacion}`
+  );
+
+  return res.json({detalleHistorial});
+} catch(e){
+  res.status(500).json({ msg: "Error " });
+}
+}
+
 export const putDetalleInvestigacion = async (req: Request, res: Response) => {
   let { id_investigacion, estado, avance,comentario } = req.body;
   // console.log("id_investigacion", id_investigacion);
