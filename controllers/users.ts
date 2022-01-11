@@ -226,6 +226,33 @@ export const getAdmin = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const putPassword = async (req: Request, res: Response) => {
+  const { clave, clave_repetida, dni } = req.body;
+  try {
+    if (!clave && !clave_repetida && !dni) {
+      return res.status(400).json({
+        msg: "datos incompletos",
+      });
+    }
+    if (clave !== clave_repetida) {
+      return res.status(400).json({
+        msg: "las claves no coinciden",
+      });
+    } else {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(clave, salt);
+      await pool.query(`update usuario set clave=? where dni=?`, [hash, dni]);
+      return res.json({ msg: "contraseña actualizada" });
+    }
+  } catch (e) {
+    res.status(500).json({
+      msg: "error en la peticion",
+    });
+  }
+};
+
+
 export const putPerson = async (req: Request, res: Response) => {
   const { id_persona } = req.body;
   const { nombre, apellido, telefono, correo, direccion } = req.body;
