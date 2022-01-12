@@ -11,7 +11,8 @@ export const postComments = async (req: Request, res: Response) => {
   const newComment = {
     id_investigacion,
     id_persona,
-    comentario
+    comentario,
+    fecha: new Date(),
   };
   try {
     const comment = await pool.query("INSERT INTO comentario SET ?", [
