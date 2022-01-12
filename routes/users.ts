@@ -18,7 +18,7 @@ router.get("/", getUsers);
 router.get("/investigadores", getInvestigators);
 router.get("/asesores", getAdvisors);
 router.get("/admin", getAdmin);
-
+router.put("/configuracion/seguridad",putPassword)
 //router.get("/:id");/*
 router.post(
   "/",
