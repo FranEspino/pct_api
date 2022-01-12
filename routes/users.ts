@@ -6,7 +6,8 @@ import {
   getInvestigators,
   getAdvisors,
   getAdmin,
-  putPerson
+  putPerson,
+  putPassword
 } from "../controllers/users";
 import uploadImage from "../middlewares/file-image-multer";
 import { existsPerson, existsRole } from "../helpers/db-validators";
