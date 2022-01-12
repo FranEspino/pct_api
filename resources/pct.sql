@@ -1,3 +1,4 @@
+DROP DATABASE IFEXIST pct;
 CREATE DATABASE pct;
 USE pct;
 CREATE TABLE persona(
@@ -87,14 +88,16 @@ CREATE TABLE usuario(
 
 
 CREATE TABLE historial(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     id_investigacion INTEGER NOT NULL,
     comentario TEXT,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP,   
     avance INT,
     CONSTRAINT fk_historial_investigacion FOREIGN KEY(id_investigacion) REFERENCES investigacion(id_investigacion)
-)
+);
 
+INSERT INTO tipo_cuenta VALUES(2000,'asesor');
+INSERT INTO tipo_cuenta VALUES(3000,'investigador');
 
 delimiter $
 CREATE TRIGGER AGREGAR_AVANCE_AU
@@ -107,6 +110,5 @@ $
 
 
 
-INSERT INTO tipo_cuenta VALUES(2000,'asesor');
-INSERT INTO tipo_cuenta VALUES(3000,'investigador')
+
 
