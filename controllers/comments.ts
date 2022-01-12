@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 const pool = require("../mysql/database");
 export const postComments = async (req: Request, res: Response) => {
  // console.log(req);
-  const { id_investigacion, id_persona, comentario, fecha } = req.body;
+  const { id_investigacion, id_persona, comentario } = req.body;
   if (!comentario) {
     return res.status(400).json({
       msg: "El comentario es necesario",
@@ -11,8 +11,7 @@ export const postComments = async (req: Request, res: Response) => {
   const newComment = {
     id_investigacion,
     id_persona,
-    comentario,
-    fecha: 'now()',
+    comentario
   };
   try {
     const comment = await pool.query("INSERT INTO comentario SET ?", [
