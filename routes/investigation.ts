@@ -30,7 +30,7 @@ router.post(
   postInvestigation
 );
 router.put("/archivo/:id_investigacion", fileUpload,putArchivo);
-router.put("/archivo64",putArchivo64);
+router.put("/archivo64/:id_investigacion",putArchivo64);
 router.get("/", getInvestigations);
 
 router.put("/", fileUpload, putInvestigations);
