@@ -109,7 +109,8 @@ export const putArchivo = async (req: Request, res: Response) => {
 };
 
 export const putArchivo64 = async (req: Request, res: Response) => {
-  const { documents,id_investigacion } = req.body;
+  const { id_investigacion } = req.params;
+  const { documents } = req.body;
   //console.log("documents:", documents);
   try {
     const investigation = await pool.query(
